@@ -7,7 +7,7 @@ var server = app.listen(4000, function() {
   console.log("listening for requests on port 4000,");
 });
 
-var io = socket(server);
-io.on("connection", socket => {
-  console.log("made socket connection", socket.id);
-});
+// var io = socket(server);
+// io.on("connection", socket => {
+//   console.log("made socket connection", socket.id);
+// });
