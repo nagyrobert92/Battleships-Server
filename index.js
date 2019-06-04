@@ -27,3 +27,8 @@ io.on("connection", client => {
 
   client.on("disconnect", () => console.log("disconnect test:", client.id));
 });
+
+
+const Board = require('./board-postions/model')
+// const Ship = require('./ships/model')
+
