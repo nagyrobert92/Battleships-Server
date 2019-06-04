@@ -1,13 +1,24 @@
-var express = require("express");
-var socket = require("socket.io");
+const express = require("express");
+const socketIo = require("socket.io");
+const Sequelize = require("sequelize");
+const sequelize = require("./db");
+const app = express();
+const port = process.env.PORT || 4000;
 
-// App setup
-var app = express();
-var server = app.listen(4000, function() {
-  console.log("listening for requests on port 4000,");
+const server = app.listen(port, onListen);
+function onListen() {
+  console.log(`Listening on port ${port}`);
+}
+const io = socketIo.listen(server);
+io.on("connection", client => {
+  console.log("client.id test:", client.id);
+
+  client.on("disconnect", () => console.log("disconnect test:", client.id));
 });
 
-// var io = socket(server);
-// io.on("connection", socket => {
-//   console.log("made socket connection", socket.id);
-// });
+const User = sequelize.define("users", {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+});
