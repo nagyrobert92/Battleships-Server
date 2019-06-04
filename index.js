@@ -16,9 +16,12 @@ io.on("connection", client => {
   client.on("disconnect", () => console.log("disconnect test:", client.id));
 });
 
-const User = sequelize.define("users", {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  }
-});
+// const User = sequelize.define("users", {
+//   name: {
+//     type: Sequelize.STRING,
+//     allowNull: false
+//   }
+// });
+
+const Session = require('./sessions/model')
+const Players = require('./players/model')

@@ -6,4 +6,4 @@ const sequelize = require('../db')
 
 
 
-module.exports = Seller
+// module.exports = 
