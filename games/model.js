@@ -12,10 +12,6 @@ const Game = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: true
     }
-    /*playTime: {
-    type: Sequelize.STRING,
-    allowNull: true
-  } */
   },
   {
     timestamps: false,
