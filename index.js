@@ -4,31 +4,28 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 4000;
-const Session = require("./sessions/model");
-const playersRouter = require("./players/routes");
+const usersRouter = require("./users/routes");
 const authRouter = require("./auth/routes");
-const sessionsRouter = require("./sessions/routes");
+const gamesRouter = require("./games/routes");
 
 app
   .use(cors())
   .use(bodyParser.json())
-  .use(playersRouter)
+  .use(usersRouter)
   .use(authRouter)
-  .use(sessionsRouter);
+  .use(gamesRouter);
 
-const server = app.listen(port, onListen);
+const server = app.listen(4000, onListen);
 function onListen() {
   console.log(`Listening on port ${port}`);
 }
 
 const io = socketIo.listen(server);
-io.on("connection", client => {
-  console.log("client.id test:", client.id);
+io.on("connection", user => {
+  console.log("user.id test:", user.id);
 
-  client.on("disconnect", () => console.log("disconnect test:", client.id));
+  user.on("disconnect", () => console.log("disconnect test:", user.id));
 });
 
-
-const Board = require('./board-postions/model')
+const Board = require("./board-postions/model");
 // const Ship = require('./ships/model')
-
