@@ -6,14 +6,14 @@ const app = express();
 const port = process.env.PORT || 4000;
 const usersRouter = require("./users/routes");
 const authRouter = require("./auth/routes");
-const gamesRouter = require("./games/routes");
+const sessionRouter = require("./games/routes");
 
 app
   .use(cors())
   .use(bodyParser.json())
   .use(usersRouter)
   .use(authRouter)
-  .use(gamesRouter);
+  .use(sessionRouter);
 
 const server = app.listen(4000, onListen);
 function onListen() {
