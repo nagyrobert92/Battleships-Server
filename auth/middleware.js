@@ -1,6 +1,4 @@
-const Player = require("../players/model");
-
-const { toData } = require("./jwt");
+const User = require("../users/model");
 
 function auth(req, res, next) {
   const auth =
@@ -8,11 +6,11 @@ function auth(req, res, next) {
   if (auth && auth[0] === "Bearer" && auth[1]) {
     try {
       const data = toData(auth[1]);
-      Player.findById(data.playerId)
-        .then(player => {
-          if (!player) return next("User does not exist");
+      User.findById(data.userId)
+        .then(user => {
+          if (!user) return next("User does not exist");
 
-          req.player = player;
+          req.user = user;
           next();
         })
         .catch(next);
