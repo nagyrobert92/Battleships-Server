@@ -12,26 +12,27 @@ const bodyParser = require("body-parser");
 const usersRouter = require("./users/routes");
 const authRouter = require("./auth/routes");
 const gameRouting = require("./games/routes");
+const boardRouting = require('./board-positions/routes')
 
 const server = app.listen(4000, onListen);
 function onListen() {
   console.log(`Listening on port ${port}`);
 }
 
-const clickedButtons = []
 const users = []
 const io = socketIo.listen(server);
 const dispatch = dispatcher(io)
 
 const gameRouter = gameRouting(dispatch)
+const boardRouter = boardRouting(dispatch)
 
 app
   .use(cors())
   .use(bodyParser.json())
-  // .use(routing)
   .use(usersRouter)
   .use(authRouter)
   .use(gameRouter)
+  .use(boardRouter)
 
 io.on("connection", user => {
   console.log("USER JOINED", user.id);
@@ -49,6 +50,3 @@ io.on("connection", user => {
   }
   );
 });
-
-const Board = require("./board-postions/model");
-// const Ship = require('./ships/model')
