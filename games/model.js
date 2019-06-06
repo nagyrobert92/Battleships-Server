@@ -1,18 +1,10 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db");
-const User = require("../users/model");
+const Board = require("../board-positions/model");
 
 const Game = sequelize.define(
-  "sessions",
+  "games",
   {
-    winner: {
-      type: Sequelize.INTEGER,
-      allowNull: true
-    },
-    loser: {
-      type: Sequelize.INTEGER,
-      allowNull: true
-    },
     status: {
       type: Sequelize.STRING,
       defaultValue: 'pending',
@@ -20,12 +12,13 @@ const Game = sequelize.define(
       allowNull: false
     }
   },
-
   {
     timestamps: false,
-    tableName: "sessions",
+    tableName: "games",
     underscored: true
   }
 );
+
+Game.belongsTo(Board)
 
 module.exports = Game;
