@@ -50,6 +50,3 @@ io.on("connection", user => {
   }
   );
 });
-
-const Board = require("./board-positions/model");
-// const Ship = require('./ships/model')
