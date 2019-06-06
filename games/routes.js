@@ -1,62 +1,62 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 
-const Session = require("./model");
-const socketIo = require("socket.io");
-const cors = require("cors");
-const app = express();
+const Game = require("./model");
 
-app.use(cors());
-app.use(bodyParser.json());
+function routing (dispatch) {
+  const router = express.Router()
 
-app.post("/sessions", (req, res, next) => {
-  const session = {
-    winner: req.body.winner,
-    loser: req.body.loser
-  };
-  Session.create(session)
-    .then(session => {
-      return res.status(201).json(session);
-    })
-    .catch(error => {
-      console.log(error);
-      next(error);
-    });
-});
+  router.post("/games", (req, res, next) => {
+    Game.create()
+      .then(game => {
+        console.log(game)
 
-app.get("/sessions", (req, res, next) => {
-  Session.findAll({ order: [["id", "DESC"]] })
-    .then(sessions => {
-      res.json({ sessions: sessions });
-    })
-    .catch(error => next(error));
-});
-app.get("/sessions/:id", (req, res, next) => {
-  const id = req.params.id;
-  Session.findByPk(id)
-    .then(session => res.json({ session }))
-    .catch(err => {
-      res.status(500).json({
-        message: "Something went wrong",
-        error: err
+        dispatch('GAME_CREATED', game)
+
+        res.send(game)
+      })
+      .catch(error => {
+        console.log(error);
+        next(error);
       });
-    });
-});
+  });
 
-app.put("/sessions/:id", (req, res, next) => {
-  const id = req.params.id;
-  Session.findByPk(id)
-    .then(session => session.update(req.body))
-    .then(session => {
-      res.json({
-        message: `Game updated with user ${session.winner} as winner`
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: "Something went wrong"
-      });
-    });
-});
+  router.get("/games", (req, res, next) => {
+    Game.findAll({ order: [["id", "DESC"]] })
+      .then(games => {
+        res.json({ games });
+      })
+      .catch(error => next(error));
+  });
 
-module.exports = app;
+  router.get("/games/:id", (req, res, next) => {
+    const id = req.params.id;
+    Game.findByPk(id)
+      .then(session => res.json({ game }))
+      .catch(err => {
+        res.status(500).json({
+          message: "Something went wrong",
+          error: err
+        });
+      });
+  });
+
+  router.put("/games/:id", (req, res, next) => {
+    const id = req.params.id;
+    Game.findByPk(id)
+      .then(game => game.update(req.body))
+      .then(game => {
+        res.json({
+          message: `Game updated with user ${game.winner} as winner`
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          message: "Something went wrong"
+        });
+      });
+  });
+
+  return router
+}
+
+module.exports = routing;

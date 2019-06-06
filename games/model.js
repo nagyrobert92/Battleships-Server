@@ -2,14 +2,9 @@ const Sequelize = require("sequelize");
 const sequelize = require("../db");
 const User = require("../users/model");
 
-const Session = sequelize.define(
+const Game = sequelize.define(
   "sessions",
   {
-    userId: {
-      type: Sequelize.INTEGER,
-      field: "user_id",
-      allowNull: false
-    },
     winner: {
       type: Sequelize.INTEGER,
       allowNull: true
@@ -19,7 +14,8 @@ const Session = sequelize.define(
       allowNull: true
     },
     status: {
-      type: Sequelize.BOOLEAN,
+      type: Sequelize.STRING,
+      defaultValue: 'pending',
       field: "is_active",
       allowNull: false
     }
@@ -32,6 +28,4 @@ const Session = sequelize.define(
   }
 );
 
-Session.belongsTo(User);
-
-module.exports = Session;
+module.exports = Game;
