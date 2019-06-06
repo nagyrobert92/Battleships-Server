@@ -1,17 +1,17 @@
-const express = require('express')
+// const express = require('express')
 
-function routing (dispatch, clicked) {
-  const router = express.Router()
+// function routing (dispatch, clicked) {
+//   const router = express.Router()
 
-  return router.post('/sessions/1', (req, res) => {
-    const { clicked } = req.body
+//   return router.post('/sessions/1', (req, res) => {
+//     const { clicked } = req.body
 
-    console.log('RECEIVED:', clicked)
+//     console.log('RECEIVED:', clicked)
 
-    clickedButtons.push(clicked)
+//     clickedButtons.push(clicked)
 
-    dispatch(clickedButtons)
-  })
-}
+//     dispatch(clickedButtons)
+//   })
+// }
 
-module.exports = routing
+// module.exports = routing
