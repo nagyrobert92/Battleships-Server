@@ -2,7 +2,7 @@ const express = require('express');
 
 const Board = require('./model')
 
-function routing (dispatch) {
+function routing(dispatch) {
   const router = express.Router()
 
   router.post("/boards", (req, res, next) => {
@@ -30,21 +30,31 @@ function routing (dispatch) {
 
   router.get("/boards/:id", (req, res, next) => {
     const id = req.params.id;
-    console.log('BOARD ID:', req.params.id)
+    console.log('BOARD ID:', id)
     Board.findByPk(id)
       .then(board => {
-        console.log("Board found")
-        res.json({ board })
-    })
+        console.log(board)
+        if (board === null) {
+          return res.send({
+              message: "Board does not exist"
+            })
+          .catch(console.error)
+        } else {
+          console.log("Board dispatched")
+          dispatch('BOARD_FOUND', board)
+          return res.send(board)
+        }
+      })
+      .then(board => {
+        if (board === null) 
+        return res.send(board)
+      })
       .catch(err => {
-        res.status(500).json({
-          message: "Something went wrong",
-          error: err
-        });
+        console.err
       });
   });
   router.put('/boards', (req, res, next) => {
-    console.log("REs",res.body.number)
+    console.log("REs", res.body.number)
   })
 
   return router
